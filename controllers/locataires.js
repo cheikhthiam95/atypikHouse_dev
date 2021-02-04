@@ -1,8 +1,9 @@
 const Locataires = require("../models/locataires");
-const validation = require("../validation");
+// const validation = require("../validation");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { validationResult } = require("express-validator");
+const config = require('../config.json');
 
 const login = async (req, res, next) => {
   const errors = validationResult(req);
@@ -14,9 +15,9 @@ const login = async (req, res, next) => {
 
   await Locataires.findOne({
     $or: [{ email: username }, { phone: username }],
-  }).then((locataire) => {
-    if (locataire) {
-      bcrypt.compare(password, locataire.password, (err, result) => {
+  }).then((user) => {
+    if (user) {
+      bcrypt.compare(password, user.password, (err, result) => {
         if (err) {
           res.status(500).json({
             message: err,
@@ -24,8 +25,8 @@ const login = async (req, res, next) => {
         }
         if (result) {
           let token = jwt.sign(
-            { first_name: locataire.first_name },
-            "VerySecretValue",
+            { first_name: user.first_name, role : user.role },
+              config.secret,
             { expiresIn: "1h" }
           );
           res.status(400).json({
@@ -57,9 +58,10 @@ const register = (req, res, next) => {
     } else {
       ///
     }
-    var locataire = new Locataires({
+    var user = new Locataires({
       first_name: req.body.first_name,
       last_name: req.body.last_name,
+      role:req.body.role,
       email: req.body.email,
       password: hashedPass,
       phone: req.body.phone,
@@ -68,10 +70,10 @@ const register = (req, res, next) => {
       country: req.body.country,
     });
     if(req.file){
-      locataire.avatar = req.file.path
+      user.avatar = req.file.path
     }
 
-    locataire
+    user
       .save()
       .then((result) => {
         console.log("Locataire creatred",result);
@@ -88,13 +90,13 @@ const createLocataire = (req, res) => {
   if (error) {
     res.status(500).send(error);
   } else {
-    let locataire = new Locataires({
+    let user = new Locataires({
       nom: req.body.nom,
       prenom: req.body.prenom,
       pays: req.body.pays,
     });
    
-    locataire
+    user
       .save()
       .then(() => {
         console.log("Locataire créatred");

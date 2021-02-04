@@ -1,9 +1,12 @@
 const express = require('express');
 const locataireController  = require('../controllers/locataires')
-const authenticate = require('../middleware/authenticate') 
+const authenticate = require('../middleware/authorize') 
+//const authorize = require('../middleware/authorize') 
+const accessAdmin = require("../middleware/roles") 
 const upload = require('../middleware/upload') 
 
-const {body} = require('express-validator')
+const {body} = require('express-validator');
+const role = require('../middleware/roles');
 // Initialisation des routes
 
 const router = express.Router();
@@ -23,13 +26,12 @@ router.post('/login',body('username').isEmail(),
 // password must be at least 5 chars long
 body('password').isLength({ min: 5 }),locataireController.login);
 // Read (locataire) GET all
-
-router.get('/getAllLocataire/',authenticate,locataireController.getAllLocataire);
+router.get('/getAllLocataire/',authenticate,accessAdmin.roleAdmin,locataireController.getAllLocataire);
 // UPDATE (locataire) PATCH
-router.patch('/updateLocataire/:id',locataireController.updateLocataire);
+router.patch('/updateLocataire/:id',authenticate,locataireController.updateLocataire);
 
 // Delete (locataire) DELETE
-router.delete('/deleteLocataire/:id',locataireController.deleteLocataire);
+router.delete('/deleteLocataire/:id',authenticate,locataireController.deleteLocataire);
 
 
 

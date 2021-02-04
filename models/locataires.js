@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 
 const LocataireSchema = new mongoose.Schema({
-    first_name: {
+  first_name: {
     type: String,
     required: true,
   },
@@ -10,6 +10,10 @@ const LocataireSchema = new mongoose.Schema({
   last_name: {
     type: String,
     required: true,
+  },
+  role: {
+    type : String, 
+    required: true
   },
   country: {
     type: String,
@@ -40,6 +44,7 @@ const LocataireSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  
 });
 
 module.exports = Locataires = mongoose.model("Locataires", LocataireSchema);

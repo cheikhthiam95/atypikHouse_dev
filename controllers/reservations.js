@@ -16,7 +16,7 @@ const createReservation = (req, res) => {
 
     }).catch((err) => {
         console.error(err);
-        res.status(500).json({ message: 'Error on  creatting reservation' })
+        res.status(500).json({ message: 'Error on  creating reservation' })
     })
     
 
@@ -38,7 +38,7 @@ const getReservation = (req, res) => {
 
  };
 
- const getAllReservation = (req, res) => {
+const getAllReservation = (req, res) => {
 
     Reservations.find((err, result) => {
         if (err) {
