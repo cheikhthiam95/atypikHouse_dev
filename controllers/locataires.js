@@ -73,8 +73,8 @@ const register = (req, res, next) => {
 
     locataire
       .save()
-      .then(() => {
-        console.log("Locataire creatred");
+      .then((result) => {
+        console.log("Locataire creatred",result);
         res.status(200).json({ message: "Locataire created" });
       })
       .catch((err) => {

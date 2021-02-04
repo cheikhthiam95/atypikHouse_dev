@@ -17,6 +17,15 @@ const mongoose = require('mongoose');
       nombrePersonne: {
         type:Number,
         required: true
+      },
+
+      extrat:{
+        descrp:{
+
+        },
+        bre:{
+          
+        }
       }
        
     }
