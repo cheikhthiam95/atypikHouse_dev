@@ -23,4 +23,12 @@ router.patch('/updateReservation/:id',authenticate,accessAdmin.roleAdminHote,hab
 // Delete (reservation) DELETE
  router.delete('/deleteReservation/:id',authenticate,accessAdmin.roleAdminHote,habitationControllers.deleteHabitation);
 
+ // comments
+ router.patch('/comment-habitation/:id',authenticate,habitationControllers.commentHabitation );
+ router.patch('/edit-comment-habitation/:id',authenticate,habitationControllers.editCommentHabitation );
+ router.patch('/delete-comment-habitation/:id',authenticate,habitationControllers.deleteCommentHabitation );
+
+ //Likes et unLikes
+router.patch('/like-habitation/:id', authenticate,habitationControllers.likeHabitation);
+router.patch('/unlike-habitation/:id', authenticate,habitationControllers.unlikeHabitation);
 module.exports = router;
