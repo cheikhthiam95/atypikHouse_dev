@@ -44,6 +44,9 @@ const LocataireSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  likes: {
+    type: [String]
+  },
   
 });
 

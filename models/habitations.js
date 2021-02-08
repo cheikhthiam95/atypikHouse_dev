@@ -40,9 +40,27 @@ const mongoose = require('mongoose');
     CodePostale: {
       type:Number,
       required: true
-    }  
-       
-    }
+    },
+    likers: {
+      type: [String],
+      required: true,
+    },
+    comments: {
+      type: [
+        {
+          commenterId:String,
+          commenterLastName: String,
+          commenterFirstName: String,
+          text: String,
+          timestamp: Number,
+        }
+      ],
+      required: true,
+    },     
+  },
+  {
+    timestamps: true,
+  }
  );
 
 
